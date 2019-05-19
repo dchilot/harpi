@@ -3,14 +3,17 @@
 
 #include "Utils.hpp"
 
-namespace harpi
-{
-
 uint8_t const MAX_TAGS = 5;
 MFRC522::Uid TAGS[MAX_TAGS];
 uint8_t TAGS_COUNT = 0;
 
 uint8_t TAGS_AGE[MAX_TAGS];
+
+uint8_t TAGS_TO_KILL[MAX_TAGS];
+uint8_t TAGS_TO_KILL_COUNT = 0;
+
+namespace
+{
 
 bool are_tags_equal(
   MFRC522::Uid const & iTag1,
@@ -36,8 +39,6 @@ bool is_tag_known(
   return false;
 }
 
-uint8_t TAGS_TO_KILL[MAX_TAGS];
-uint8_t TAGS_TO_KILL_COUNT = 0;
 
 void increase_age_and_kill_elders()
 {
@@ -94,6 +95,10 @@ void clear_tags()
   TAGS_COUNT = 0;
 }
 
+} // namespace
+
+namespace harpi
+{
 
 TagFinder::TagFinder(
   uint8_t const iPinSDA,
